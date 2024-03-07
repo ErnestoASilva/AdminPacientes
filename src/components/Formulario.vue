@@ -1,5 +1,5 @@
 <script setup>
-    import { ref, reactive } from 'vue';
+    import { ref, reactive, computed } from 'vue';
     import Alerta from './Alerta.vue'
 
     const alerta = reactive({
@@ -11,6 +11,10 @@
     'update:email', 'guardar-paciente']);
 
     const props = defineProps({
+        id: {
+            type: [String, null],
+            required: true
+        },
         nombre: {
             type: String,
             required: true
@@ -47,9 +51,13 @@
                     tipo: '',
                     mensaje: '',
                 })
-            }, 3000);
+            }, 2000);
         }
     }
+
+    const editando = computed(() => {
+        return props.id
+    })
 
 
 </script>
@@ -143,7 +151,8 @@
             class="bg-indigo-600 w-full p-3 text-white uppercase 
             font-bold hover:bg-indigo-800 cursor-pointer transition-colors
             rounded-md"
-            value="Registrar paciente"/>
+            :value="[editando ? 'Guardar Cambios' : 'Registrar paciente']"
+            />
 
         </form>
     </div>
